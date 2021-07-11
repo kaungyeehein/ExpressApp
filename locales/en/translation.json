@@ -1,0 +1,9 @@
+{
+  "user_create_success": "User is created.",
+  "user_not_found_exception": "User is not found.",
+  "validation_exception": "Invalid request body.",
+  "username_null":"Username must not be empty.",
+  "username_size":"Username must have min 4 and max 32 characters",
+  "email_invalid":"Email must be valid address",
+  "email_inuse":"This email is already used"
+}

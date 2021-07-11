@@ -4,13 +4,13 @@ module.exports = (err, req, res, next) => {
   if (errors) {
     validationErrors = {};
     errors.forEach((errors) => {
-      validationErrors[errors.param] = errors.msg;
+      validationErrors[errors.param] = req.t(errors.msg);
     });
   }
   res
     .status(status)
     .send({
-      message: message,
+      message: req.t(message),
       timestamp: Date.now(),
       path: req.originalUrl,
       validationErrors

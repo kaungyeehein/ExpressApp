@@ -8,14 +8,14 @@ const { body, validationResult } = require('express-validator');
 
 router.post('/users', [
   body('username').trim()
-    .notEmpty().withMessage('Username must not be empty.').bail()
-    .isLength({ min: 4, max: 32 }).withMessage('Username must have min 4 and max 32 characters'),
+    .notEmpty().withMessage('username_null').bail()
+    .isLength({ min: 4, max: 32 }).withMessage('username_size'),
   body('email').trim()
-    .isEmail().withMessage('Email must be valid address').bail()
+    .isEmail().withMessage('email_invalid').bail()
     .custom(async (email) => {
       const user = await UserService.findByEmail(email);
       if (user) {
-        throw new Error('This email is already used');
+        throw new Error('email_inuse');
       }
     })
 ], async (req, res, next) => {
@@ -25,7 +25,7 @@ router.post('/users', [
     // return res.status(400).send(errors.array());
   }
   await UserService.create(req.body);
-  res.send('success');
+  res.send({ message: req.t('user_create_success') });
 });
 
 router.get('/users', pagination, async (req, res) => {

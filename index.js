@@ -4,7 +4,7 @@ const UserService = require('./src/user/UserService');
 const Article = require('./src/article/Article');
 
 sequelize.sync({ force: true }).then(async () => {
-  for (let i = 1; i <= 15; i++) {
+  for (let i = 1; i <= 5; i++) {
     const user = {
       username: `user${i}`,
       email: `user${i}@mail.com`,
