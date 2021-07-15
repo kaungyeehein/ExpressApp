@@ -49,3 +49,10 @@ NodeJS
 
     node -v #v14.17.3
     sudo npm i -g n
+
+## (6) Deploy on Heroku
+
+    heroku create
+    git remote -v
+    heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
+    git push heroku heroku-deployment:master
