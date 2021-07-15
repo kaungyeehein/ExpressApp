@@ -6,6 +6,7 @@ const ValidationExecption = require('../shared/ValidationnException');
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const basicAuthentication = require('../shared/basicAuthentication');
+const jwt = require('jsonwebtoken');
 
 router.post('/users', [
   body('username').trim()
@@ -69,6 +70,17 @@ router.delete('/users/:id', idNumberControl, basicAuthentication, async (req, re
 
   await UserService.deleteUser(req.params.id);
   res.send('removed');
+});
+
+router.get("/login", basicAuthentication, (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
+  if (!authenticatedUser) {
+    return res.status(403).send({ message: 'Forbidden' });
+  }
+  const token = jwt.sign({ id: authenticatedUser.id }, "this-is-our-secret");
+  return res.send({
+    token: token
+  });
 });
 
 module.exports = router;

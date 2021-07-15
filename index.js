@@ -16,7 +16,8 @@ if (process.env.NODE_ENV === 'production') {
       await UserService.create(user);
 
       const article = {
-        content: `article content ${i}`
+        content: `article content ${i}`,
+        userId: `${i}`
       };
       await Article.create(article);
     }

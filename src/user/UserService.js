@@ -44,7 +44,9 @@ const deleteUser = async (id) => {
 };
 
 const findByEmail = async (email) => {
-  const user = await User.findOne({ where: { email: email } });
+  const user = await User.findOne({ 
+    where: { email: email } 
+  });
   return user;
 };
 
