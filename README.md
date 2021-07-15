@@ -55,4 +55,5 @@ NodeJS
     heroku create
     git remote -v
     heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false
-    git push heroku heroku-deployment:master
+    git push heroku master
+    heroku logs --tail
