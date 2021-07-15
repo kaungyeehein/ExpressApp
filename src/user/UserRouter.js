@@ -3,8 +3,9 @@ const idNumberControl = require('../shared/idNumberControl');
 const pagination = require('../shared/pagination');
 const UserService = require('./UserService');
 const ValidationExecption = require('../shared/ValidationnException');
-
+const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
+const basicAuthentication = require('../shared/basicAuthentication');
 
 router.post('/users', [
   body('username').trim()
@@ -42,12 +43,30 @@ router.get('/users/:id', idNumberControl, async (req, res, next) => {
   }
 });
 
-router.put('/users/:id', idNumberControl, async (req, res) => {
+router.put('/users/:id', idNumberControl, basicAuthentication, async (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
+  if (!authenticatedUser) {
+    return res.status(403).send({ message: 'Forbidden' });
+  }
+
+  if (authenticatedUser.id != req.params.id) {
+    return res.status(403).send({ message: 'Forbidden' });
+  }
+
   await UserService.updateUser(req.params.id, req.body);
   res.send('updated');
 });
 
-router.delete('/users/:id', idNumberControl, async (req, res) => {
+router.delete('/users/:id', idNumberControl, basicAuthentication, async (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
+  if (!authenticatedUser) {
+    return res.status(403).send({ message: 'Forbidden' });
+  }
+
+  if (authenticatedUser.id != req.params.id) {
+    return res.status(403).send({ message: 'Forbidden' });
+  }
+
   await UserService.deleteUser(req.params.id);
   res.send('removed');
 });

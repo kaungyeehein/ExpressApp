@@ -19,6 +19,7 @@ NodeJS
     npm i i18next #20.3.2
     npm i i18next-fs-backend #1.1.1
     npm i i18next-http-middleware #3.1.4
+    npm i config #3.3.6
 
 ### MongoDB
 
@@ -33,11 +34,13 @@ NodeJS
     
     npm i -D eslint #7.29.0
     npm i -D nodemon #2.0.10
+    npm i -D cross-env #7.0.3
 
 ## (4) Run
 
     node index.js #run normal
     npm start #run with nodemon
+    npm run start:pro #run with cross-env
 
 ## (5) Update
     

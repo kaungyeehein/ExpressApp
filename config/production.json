@@ -1,0 +1,10 @@
+{
+  "database": {
+    "db": "pro-db",
+    "username": "pro-user",
+    "password": "pro-pass",
+    "dialect": "sqlite",
+    "host": "./pro.sqlite",
+    "logging": false
+  }
+}
