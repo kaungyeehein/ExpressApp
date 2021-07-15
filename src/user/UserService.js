@@ -2,6 +2,7 @@ const pagination = require('../shared/pagination');
 const User = require('./User');
 const UserNotFoundException = require('./UserNotFoundException');
 const bcrypt = require('bcrypt');
+const Article = require('../article/Article');
 
 const create = async (user) => {
   const { username, email, password } = user;
@@ -14,7 +15,14 @@ const getUsers = async (pagination) => {
   const users = await User.findAndCountAll({
     limit: size,
     offset: page * size,
-    attributes: ['id', 'username', 'email']
+    attributes: ['id', 'username', 'email'],
+    include: [
+      {
+        model: Article,
+        as: "articles",
+        attributes: ['id', 'content']
+      }
+    ]
   });
   return {
     totalPage: Math.ceil(users.count / size),
@@ -25,7 +33,14 @@ const getUsers = async (pagination) => {
 const getUser = async (id) => {
   const user = await User.findOne({
     where: { id: id },
-    attributes: ['id', 'username', 'email']
+    attributes: ['id', 'username', 'email'],
+    include: [
+      {
+        model: Article,
+        as: "articles",
+        attributes: ['id', 'content']
+      }
+    ]
   });
   if (!user) {
     throw new UserNotFoundException();
@@ -44,8 +59,8 @@ const deleteUser = async (id) => {
 };
 
 const findByEmail = async (email) => {
-  const user = await User.findOne({ 
-    where: { email: email } 
+  const user = await User.findOne({
+    where: { email: email }
   });
   return user;
 };

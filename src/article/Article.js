@@ -8,7 +8,7 @@ Article.init({
     type: DataTypes.STRING
   },
   userId: {
-    type: DataTypes.INTEGER
+    type: DataTypes.NUMBER
   }
 }, {
   sequelize,

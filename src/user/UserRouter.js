@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const basicAuthentication = require('../shared/basicAuthentication');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 
 router.post('/users', [
   body('username').trim()
@@ -77,7 +78,7 @@ router.get("/login", basicAuthentication, (req, res) => {
   if (!authenticatedUser) {
     return res.status(403).send({ message: 'Forbidden' });
   }
-  const token = jwt.sign({ id: authenticatedUser.id }, "this-is-our-secret");
+  const token = jwt.sign({ id: authenticatedUser.id }, config.get('secret-key'));
   return res.send({
     token: token
   });

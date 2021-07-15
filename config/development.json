@@ -6,5 +6,6 @@
     "dialect": "sqlite",
     "host": "./dev.sqlite",
     "logging": true
-  }
+  },
+  "secret-key": "73b07db7094b10758b46f01f82b90e4b72fbb31f7c0180f26af26a9ea54a496c"
 }
