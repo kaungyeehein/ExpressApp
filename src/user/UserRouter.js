@@ -8,6 +8,7 @@ const { body, validationResult } = require('express-validator');
 const basicAuthentication = require('../shared/basicAuthentication');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const limitter = require('express-rate-limit');
 
 router.post('/users', [
   body('username').trim()
@@ -73,7 +74,16 @@ router.delete('/users/:id', idNumberControl, basicAuthentication, async (req, re
   res.send('removed');
 });
 
-router.get("/login", basicAuthentication, (req, res) => {
+const loginLimitter = limitter({
+  windowMs: 5 * 60 * 1000,
+  max: 3,
+  message: {
+    code: 429,
+    message: 'Too many request, try again after 5 minutes.'
+  }
+});
+
+router.get("/login", loginLimitter, basicAuthentication, (req, res) => {
   const authenticatedUser = req.authenticatedUser;
   if (!authenticatedUser) {
     return res.status(403).send({ message: 'Forbidden' });

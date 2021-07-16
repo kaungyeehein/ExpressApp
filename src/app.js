@@ -1,5 +1,5 @@
 const express = require('express');
-
+const limitter = require('express-rate-limit');
 const UserRouter = require('./user/UserRouter');
 const ArticleRouter = require('./article/ArticleRouter');
 const ErrorHandler = require('./error/ErrorHandler');
@@ -16,6 +16,16 @@ i18next.use(Backend).use(middleware.LanguageDetector)
   });
 
 const app = express();
+
+app.use(limitter({
+  windowMs: 5000,
+  max: 5,
+  message: {
+    code: 429,
+    message: 'Too many request.'
+  }
+}));
+
 app.use(middleware.handle(i18next));
 app.use(express.json());
 
