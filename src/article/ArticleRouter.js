@@ -26,6 +26,7 @@ router.get('/articles', pagination, async (req, res) => {
   });
 });
 
+// TODO: add input validation @kaungyeehein look at issue #1
 router.post('/articles', async (req, res) => {
   const authorization = req.headers.authorization;
   const token = authorization.substring(7);
