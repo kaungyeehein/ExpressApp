@@ -21,6 +21,7 @@ NodeJS
     npm i i18next-http-middleware #3.1.4
     npm i config #3.3.6
     npm i express-rate-limit #5.3.0
+    npm i multer #1.4.2
 
 ### MongoDB
 

@@ -2,6 +2,7 @@ const express = require('express');
 const limitter = require('express-rate-limit');
 const UserRouter = require('./user/UserRouter');
 const ArticleRouter = require('./article/ArticleRouter');
+const FileRouter = require('./file/FileRouter');
 const ErrorHandler = require('./error/ErrorHandler');
 const i18next = require('i18next');
 const Backend = require('i18next-fs-backend');
@@ -28,9 +29,11 @@ app.use(limitter({
 
 app.use(middleware.handle(i18next));
 app.use(express.json());
+app.use(express.static('./static'));
 
 app.use(UserRouter);
 app.use(ArticleRouter);
+app.use(FileRouter);
 
 app.use(ErrorHandler);
 
